@@ -18,7 +18,7 @@ data(df_learnr14)
 
 ## Introduction
 
-Welcome back to the tutorial for week 14! It's the second to last tutorial and as always we will start with some knowledge questions to repeat the lecture. In the coding exercises you will look at the support for the European Union among the citizens of member-states. Good luck and have fun!
+Welcome back to the tutorial for week 14! It is the second to last tutorial and as always we will start with some knowledge questions to repeat the lecture. In the coding exercises you will look at the support for the European Union among the citizens of member-states. Good luck and have fun!
 
 ## Knowledge Questions
 
@@ -35,7 +35,7 @@ question("What is the general problem with causal inference for observational da
 
 ```{r q2, echo = FALSE}
 question("What is the identification strategy for difference-in-differences designs?",
-  answer("The treatment group's change over time in absence of the treatment is equal to the control group's change over time.", correct = T),
+  answer("The treatment group`s change over time in absence of the treatment is equal to the control group`s change over time.", correct = T),
   answer("The outcome for the treatment group in absence of the treatment is identical to the outcome of the control group.", message = ""),
   answer("The average causal effect is the difference in the treatment group's outcome before and after the treatment.", message = "What role does the control group play here?"),
   random_answer_order = TRUE,
@@ -73,7 +73,7 @@ question_text("And what about the average degree of anti-authoritarianism among 
 )
 ```
 
-In the next few tasks, you will go through the steps necessary to calculate the causal effect of EU membership on anti-authoritarian attitudes of the countries' citizens using a difference-in-differences design. In particular, you will examine what the effect of EU accession on anti-authoritarian values was for Romania (treatment unit) compared to Albania (control unit).
+In the next few tasks, you will go through the steps necessary to calculate the causal effect of EU membership on anti-authoritarian attitudes of the countries` citizens using a difference-in-differences design. In particular, you will examine what the effect of EU accession on anti-authoritarian values was for Romania (treatment unit) compared to Albania (control unit).
 
 Calculate the change in anti-authoritarian values for Romania between 2008-2010 and 1999-2004. Round to two digits after the decimal. 
 
@@ -151,7 +151,7 @@ did_data <- df_learnr14 %>% tibble() %>%
 
 ```{r q10, echo = FALSE}
 question_text(
-  "What is the average treatment effect of EU accession in the regression model`? Please round to two digits after the comma.",
+  "What is the average treatment effect of EU accession in the regression model? Please round to two digits after the decimal",
   answer("-8.23", correct = T),
   allow_retry = TRUE,
   incorrect = "Hint:Have you specified the data correctly?"

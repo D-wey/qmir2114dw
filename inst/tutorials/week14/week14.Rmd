@@ -15,6 +15,7 @@ gradethis::gradethis_setup()
 
 data(df_learnr14)
 ```
+
 ## Introduction
 
 Welcome back to the tutorial for week 14! It is the second to last tutorial and as always we will start with some knowledge questions to repeat the lecture. In the coding exercises you will look at the support for the European Union among the citizens of member-states. Good luck and have fun!
@@ -106,13 +107,45 @@ question_text(
 )
 ```
 
-What is the average treatment effect of EU accession for Romania? Based on the two previous exercises you already have everything you need! Alternatively, two items `difference_albania` and `difference_romania` have already been specified for you. Do not forget to round to two digits after the comma.
+
+## Calculation the ATE
+
+What is the average treatment effect of EU accession for Romania? Based on the two previous exercises you already have everything you need! Alternatively, you cna use the code below to calculate the differences between the two countries. Do not forget to round to two digits after the comma.
 
 ```{r set-up}
 
-difference_albania <- df_learnr14$cntrymean_antiauth[df_learnr14$countryname == "Albania" & df_learnr14$wave == "2008-2010"] - df_learnr14$cntrymean_antiauth[df_learnr14$countryname == "Albania" & df_learnr14$wave == "1999-2004"]
 
-difference_romania <- df_learnr14$cntrymean_antiauth[df_learnr14$countryname == "Romania" & df_learnr14$wave == "2008-2010"] - df_learnr14$cntrymean_antiauth[df_learnr14$countryname == "Romania" & df_learnr14$wave == "1999-2004"]
+albania <- df_learnr14 %>% 
+    # select relevant variables
+  select(countryname, wave, cntrymean_antiauth) %>% 
+  # filter for treatment and control cases
+  filter(countryname == "Albania") %>% 
+  # filter for pre and post treatment period
+  filter(wave == "1999-2004" | wave == "2008-2010") %>% 
+  # spread out the year variable to make calculation easier
+  spread(wave, cntrymean_antiauth) %>%
+    # rename year values
+  rename("wave2" = `2008-2010`,
+         "wave1" = `1999-2004`) %>%
+  # Calculate difference within units
+  mutate(difference_within = wave2 - wave1)
+
+
+
+romania <- df_learnr14 %>% 
+    # select relevant variables
+  select(countryname, wave, cntrymean_antiauth) %>% 
+  # filter for treatment and control cases
+  filter(countryname == "Romania") %>% 
+  # filter for pre and post treatment period
+  filter(wave == "1999-2004" | wave == "2008-2010") %>% 
+  # spread out the year variable to make calculation easier
+  spread(wave, cntrymean_antiauth) %>%
+    # rename year values
+  rename("wave2" = `2008-2010`,
+         "wave1" = `1999-2004`) %>%
+  # Calculate difference within units
+  mutate(difference_within = wave2 - wave1)
 
 ```
 

@@ -20,7 +20,7 @@ data(df_learnr14)
 
 Welcome back to the tutorial for week 14! It's the second to last tutorial and as always we will start with some knowledge questions to repeat the lecture. In the coding exercises you will look at the support for the European Union among the citizens of member-states. Good luck and have fun!
 
-## Exercises
+## Knowledge Questions
 
 ```{r q1, echo = FALSE}
 question("What is the general problem with causal inference for observational data?",
@@ -43,6 +43,8 @@ question("What is the identification strategy for difference-in-differences desi
   incorrect = "Hint: Check the lecture materials."
 )
 ```
+
+## Difference-in-Differences
 
 Take a look at our data-set `df_learnr14`. What is the average degree of anti-authoritarianism (`cntrymean_antiauth`) among EU members(`EU`) in 2008-2010 (`wave`). Please round to the second decimal.
 
@@ -73,7 +75,7 @@ question_text("And what about the average degree of anti-authoritarianism among 
 
 In the next few tasks, you will go through the steps necessary to calculate the causal effect of EU membership on anti-authoritarian attitudes of the countries' citizens using a difference-in-differences design. In particular, you will examine what the effect of EU accession on anti-authoritarian values was for Romania (treatment unit) compared to Albania (control unit).
 
-Calculate the change in anti-authoritarian values for Romania between 2008-2010 and 1999-2004. Round to four digits after the decimal. 
+Calculate the change in anti-authoritarian values for Romania between 2008-2010 and 1999-2004. Round to two digits after the decimal. 
 
 
 ```{r exercise2, exercise = TRUE}
@@ -81,15 +83,15 @@ Calculate the change in anti-authoritarian values for Romania between 2008-2010 
 ```
 
 ```{r q5, echo = FALSE}
-question_text("What is the change in anti-authoritarian values for Romania between 2008-2010 and 1999-2004. Round to four digits after the comma.",
- # answer(0.3177, correct = T),
-  answer("0.3177", correct = T),
+question_text("What is the change in anti-authoritarian values for Romania between 2008-2010 and 1999-2004. Round to two digits after the comma.",
+ # answer(0.32, correct = T),
+  answer("0.32", correct = T),
   allow_retry = TRUE,
   incorrect = "Hint: Following what we have done in the lab, calculate the values of \"cntrymean_antiauth\" for Romania for these two time points and subtract them from each other."
 )
 ```
 
-Now, calculate the change in anti-authoritarian values for Albania between 2008-2010 and 1999-2004. Round to four digits after the comma.
+Now, calculate the change in anti-authoritarian values for Albania between 2008-2010 and 1999-2004. Round to two digits after the comma.
 
 ```{r exercise3, exercise = TRUE}
 
@@ -97,15 +99,15 @@ Now, calculate the change in anti-authoritarian values for Albania between 2008-
 
 ```{r q6, echo = FALSE}
 question_text(
-  "What is the change in anti-authoritarian values for Albania between 2008-2010 and 1999-2004. Round to four digits after the comma.",
- # answer(-4.7695, correct = T),
-  answer("-4.7695", correct = T),
+  "What is the change in anti-authoritarian values for Albania between 2008-2010 and 1999-2004. Round to two digits after the comma.",
+ # answer(-4.77, correct = T),
+  answer("-4.77", correct = T),
   allow_retry = TRUE,
   incorrect = "Hint: Following what we have done in the lab, calculate the values of \"cntrymean_antiauth\" for Albania for these two time points and subtract them from each other."
 )
 ```
 
-What is the average treatment effect of EU accession for Romania? Round to four digits after the comma.
+What is the average treatment effect of EU accession for Romania? Round to two digits after the comma.
 
 ```{r exercise4, exercise = TRUE}
 
@@ -114,9 +116,9 @@ What is the average treatment effect of EU accession for Romania? Round to four 
 
 ```{r q8, echo = FALSE}
 question_text(
-  "What is the average treatment effect of EU accession for Romania? Round to four digits after the comma.",
-#  answer(5.0872, correct = T),
-  answer("5.0872", correct = T),
+  "What is the average treatment effect of EU accession for Romania? Round to two digits after the comma.",
+#  answer(5.09, correct = T),
+  answer("5.09", correct = T),
   allow_retry = TRUE,
   incorrect = "Hint: The average treatment effect for the treated (in this case, Romania) is the difference between the change in outcomes for the treatment unit (Romania) and the change in outcomes for the control unit (Albania)."
 )
@@ -132,6 +134,31 @@ question("Does this mean that anti-authoritarian attitudes in Romania ... due to
   incorrect = "Hint: Think about what the treatment effect means."
 )
 ```
+
+## Regression Difference-in-Differences
+
+In a final step, we want you to analyze a difference-in-differences regression model. The treatment group and treatment time are already specified for you in the next chunk. 
+
+
+```{r exercise5, exercise = TRUE}
+
+did_data <- df_learnr14 %>% tibble() %>%
+  filter(countryname == "Romania" | countryname == "Albania" | countryname == "Finland" | countryname == "Ukraine" | countryname == "Switzerland") %>%
+  mutate(treatment_time = ifelse(wave == "2008-2010", 1, 0),
+         treatment_group = ifelse(countryname == "Romania", 1, 0))
+
+```
+
+```{r q10, echo = FALSE}
+question_text(
+  "What is the average treatment effect of EU accession in the regression model`? Please round to two digits after the comma.",
+  answer("-8.23", correct = T),
+  allow_retry = TRUE,
+  incorrect = "Hint:Have you specified the data correctly?"
+)
+```
+
+
 
 ## Submit
 
